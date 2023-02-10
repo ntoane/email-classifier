@@ -73,4 +73,11 @@ def transform_text(text):
     return " ".join(y)
 
 data['transformed_text'] = data['email'].apply(transform_text)
-print(data.head())
+
+
+# Feature Extraction using Bag of Words model (CountVectorizer) to convert the cleaned text into numeric features
+cv = CountVectorizer()
+tfidf = TfidfVectorizer(max_features=16)
+
+X = tfidf.fit_transform(data['transformed_text']).toarray()
+print(X.shape)
