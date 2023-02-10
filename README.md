@@ -12,7 +12,7 @@ will be required to input a test email.
 - sklearn 1.1
 
 # Authors
-Lekuba Ntoane (l.ntoane@gmail.com) - 2023
+Lekuba Ntoane - 2023
 
 # License
 No licence
