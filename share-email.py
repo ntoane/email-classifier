@@ -10,6 +10,7 @@ from sklearn.feature_extraction.text import CountVectorizer, TfidfVectorizer
 from nltk.stem.porter import PorterStemmer
 from sklearn.linear_model import LogisticRegression
 
+# A list of labelled emails
 emails = [
     ['I shared your email', 'shared'],
     ['I just shared your address', 'shared'],
@@ -36,5 +37,40 @@ emails = [
     ['Can I give your contacts with my friend?', 'share'],
 ]
 
+# Create a data frame from a list of emails
 data = pd.DataFrame(emails, columns=['email', 'label'])
-print(data)
+
+# Encode shared=1, share=0
+encoder = LabelEncoder()
+data['label'] = encoder.fit_transform(data['label'])
+
+# PorterStemmer
+ps = PorterStemmer()
+# Function to transform input text
+def transform_text(text):
+    text = text.lower()
+    text = nltk.word_tokenize(text)
+    
+    y = []
+    for i in text:
+        if i.isalnum():
+            y.append(i)
+    
+    text = y[:]
+    y.clear()
+    
+    for i in text:
+        if i not in stopwords.words('english') and i not in string.punctuation:
+            y.append(i)
+            
+    text = y[:]
+    y.clear()
+    
+    for i in text:
+        y.append(ps.stem(i))
+    
+            
+    return " ".join(y)
+
+data['transformed_text'] = data['email'].apply(transform_text)
+print(data.head())
