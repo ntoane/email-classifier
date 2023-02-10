@@ -80,4 +80,7 @@ cv = CountVectorizer()
 tfidf = TfidfVectorizer(max_features=16)
 
 X = tfidf.fit_transform(data['transformed_text']).toarray()
-print(X.shape)
+y = data['label'].values
+
+# Split the dataset into train and test before feature extraction
+X_train,X_test,y_train,y_test = train_test_split(X,y,test_size=0.2,random_state=2)
