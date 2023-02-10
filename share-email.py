@@ -84,3 +84,9 @@ y = data['label'].values
 
 # Split the dataset into train and test before feature extraction
 X_train,X_test,y_train,y_test = train_test_split(X,y,test_size=0.2,random_state=2)
+
+# Train Logistic Regression model
+lrc = LogisticRegression(solver='liblinear', penalty='l1')
+lrc.fit(X_train,y_train)
+
+y_pred = lrc.predict(X_test)
